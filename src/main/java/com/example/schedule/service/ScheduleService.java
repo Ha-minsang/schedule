@@ -39,7 +39,7 @@ public class ScheduleService {
 
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findByWriter(String writer) {
-        List<Schedule> schedules= scheduleRepository.findByWriter(writer);
+        List<Schedule> schedules= scheduleRepository.findAllByWriterOrderByModifiedAtDesc(writer);
         List<GetScheduleResponse> dtos = new ArrayList<>();
         for (Schedule schedule : schedules) {
             GetScheduleResponse dto = new GetScheduleResponse(
@@ -55,8 +55,9 @@ public class ScheduleService {
         return dtos;
     }
 
+    @Transactional(readOnly = true)
     public List<GetScheduleResponse> findAll() {
-            List<Schedule> schedules= scheduleRepository.findAll();
+            List<Schedule> schedules= scheduleRepository.findAllByOrderByModifiedAtDesc();
             List<GetScheduleResponse> dtos = new ArrayList<>();
             for (Schedule schedule : schedules) {
                 GetScheduleResponse dto = new GetScheduleResponse(
@@ -71,4 +72,6 @@ public class ScheduleService {
             }
             return dtos;
     }
+
+
 }
