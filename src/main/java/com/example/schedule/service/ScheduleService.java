@@ -93,19 +93,20 @@ public class ScheduleService {
         );
         if (!(schedule.getPassword().equals(request.getPassword()))) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        } else {
+            schedule.updateSchedule(
+                    request.getTitle(),
+                    request.getWriter()
+            );
+            return new UpdateScheduleResponse(
+                    schedule.getId(),
+                    schedule.getTitle(),
+                    schedule.getContents(),
+                    schedule.getWriter(),
+                    schedule.getCreatedAt(),
+                    schedule.getModifiedAt()
+            );
         }
-        schedule.updateSchedule(
-                request.getTitle(),
-                request.getWriter()
-        );
-        return new UpdateScheduleResponse(
-                schedule.getId(),
-                schedule.getTitle(),
-                schedule.getContents(),
-                schedule.getWriter(),
-                schedule.getCreatedAt(),
-                schedule.getModifiedAt()
-        );
     }
 
     @Transactional
