@@ -2,11 +2,15 @@ package com.example.schedule.service;
 
 import com.example.schedule.dto.CreateScheduleRequest;
 import com.example.schedule.dto.CreateScheduleResponse;
+import com.example.schedule.dto.GetScheduleResponse;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +35,40 @@ public class ScheduleService {
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getModifiedAt()
         );
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetScheduleResponse> findByWriter(String writer) {
+        List<Schedule> schedules= scheduleRepository.findByWriter(writer);
+        List<GetScheduleResponse> dtos = new ArrayList<>();
+        for (Schedule schedule : schedules) {
+            GetScheduleResponse dto = new GetScheduleResponse(
+                    schedule.getId(),
+                    schedule.getTitle(),
+                    schedule.getContents(),
+                    schedule.getWriter(),
+                    schedule.getCreatedAt(),
+                    schedule.getModifiedAt()
+            );
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    public List<GetScheduleResponse> findAll() {
+            List<Schedule> schedules= scheduleRepository.findAll();
+            List<GetScheduleResponse> dtos = new ArrayList<>();
+            for (Schedule schedule : schedules) {
+                GetScheduleResponse dto = new GetScheduleResponse(
+                        schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContents(),
+                        schedule.getWriter(),
+                        schedule.getCreatedAt(),
+                        schedule.getModifiedAt()
+                );
+                dtos.add(dto);
+            }
+            return dtos;
     }
 }
