@@ -1,8 +1,6 @@
 package com.example.schedule.service;
 
-import com.example.schedule.dto.CreateScheduleRequest;
-import com.example.schedule.dto.CreateScheduleResponse;
-import com.example.schedule.dto.GetScheduleResponse;
+import com.example.schedule.dto.*;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +77,27 @@ public class ScheduleService {
                 () -> new IllegalArgumentException("없는 일정입니다.")
         );
         return new GetScheduleResponse(
+                schedule.getId(),
+                schedule.getTitle(),
+                schedule.getContents(),
+                schedule.getWriter(),
+                schedule.getCreatedAt(),
+                schedule.getModifiedAt()
+        );
+    }
+
+    public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException("없는 일정입니다.")
+        );
+        if (!(schedule.getPassword().equals(request.getPassword()))) {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+        schedule.updateSchedule(
+                request.getTitle(),
+                request.getWriter()
+        );
+        return new UpdateScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContents(),
