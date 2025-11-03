@@ -86,6 +86,7 @@ public class ScheduleService {
         );
     }
 
+    @Transactional
     public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalArgumentException("없는 일정입니다.")
@@ -105,5 +106,14 @@ public class ScheduleService {
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
         );
+    }
+
+    @Transactional
+    public void delete(Long scheduleId) {
+        boolean existance = scheduleRepository.existsById(scheduleId);
+        if (!existance) {
+            throw new IllegalArgumentException("없는 일정입니다.");
+        }
+        scheduleRepository.deleteById(scheduleId);
     }
 }
