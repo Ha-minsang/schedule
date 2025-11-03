@@ -21,8 +21,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedules")
-    public ResponseEntity<List<GetScheduleResponse>> getSchedulesByWriter(@RequestParam String writer) {
-        if (writer.isEmpty()) {
+    public ResponseEntity<List<GetScheduleResponse>> getSchedulesByWriter(@RequestParam(required = false) String writer) {
+        if (writer == null) {
             return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findAll());
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findByWriter(writer));
