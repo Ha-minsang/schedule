@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Entity
 @Table(name = "schedules")
@@ -19,15 +17,15 @@ public class Schedule extends BaseEntity{
     @Column(length = 30, nullable = false)
     private String title;
     @Column(length = 200, nullable = false)
-    private String contents;
+    private String memo;
     @Column(nullable = false)
     private String writer;
     @Column(nullable = false)
     private String password;
 
-    public  Schedule(String title, String contents, String writer, String password) {
+    public  Schedule(String title, String memo, String writer, String password) {
         this.title = title;
-        this.contents = contents;
+        this.memo = memo;
         this.writer = writer;
         this.password = password;
     }

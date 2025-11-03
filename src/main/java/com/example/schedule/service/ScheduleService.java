@@ -20,7 +20,7 @@ public class ScheduleService {
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(
                 request.getTitle(),
-                request.getContents(),
+                request.getMemo(),
                 request.getWriter(),
                 request.getPassword()
         );
@@ -28,7 +28,7 @@ public class ScheduleService {
         return new CreateScheduleResponse(
                 savedSchedule.getId(),
                 savedSchedule.getTitle(),
-                savedSchedule.getContents(),
+                savedSchedule.getMemo(),
                 savedSchedule.getWriter(),
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getModifiedAt()
@@ -43,7 +43,7 @@ public class ScheduleService {
             GetScheduleResponse dto = new GetScheduleResponse(
                     schedule.getId(),
                     schedule.getTitle(),
-                    schedule.getContents(),
+                    schedule.getMemo(),
                     schedule.getWriter(),
                     schedule.getCreatedAt(),
                     schedule.getModifiedAt()
@@ -61,7 +61,7 @@ public class ScheduleService {
                 GetScheduleResponse dto = new GetScheduleResponse(
                         schedule.getId(),
                         schedule.getTitle(),
-                        schedule.getContents(),
+                        schedule.getMemo(),
                         schedule.getWriter(),
                         schedule.getCreatedAt(),
                         schedule.getModifiedAt()
@@ -79,7 +79,7 @@ public class ScheduleService {
         return new GetScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),
-                schedule.getContents(),
+                schedule.getMemo(),
                 schedule.getWriter(),
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
@@ -101,7 +101,7 @@ public class ScheduleService {
             return new UpdateScheduleResponse(
                     schedule.getId(),
                     schedule.getTitle(),
-                    schedule.getContents(),
+                    schedule.getMemo(),
                     schedule.getWriter(),
                     schedule.getCreatedAt(),
                     schedule.getModifiedAt()
@@ -110,11 +110,14 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void delete(Long scheduleId) {
-        boolean existance = scheduleRepository.existsById(scheduleId);
-        if (!existance) {
-            throw new IllegalArgumentException("없는 일정입니다.");
+    public void delete(Long scheduleId, DeleteScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException("없는 일정입니다.")
+        );
+        if (request.getPassword().equals(schedule.getPassword())) {
+            scheduleRepository.delete(schedule);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
-        scheduleRepository.deleteById(scheduleId);
     }
 }
