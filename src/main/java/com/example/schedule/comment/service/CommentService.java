@@ -1,7 +1,6 @@
 package com.example.schedule.comment.service;
 
-import com.example.schedule.comment.dto.CreateCommentRequest;
-import com.example.schedule.comment.dto.CreateCommentResponse;
+import com.example.schedule.comment.dto.*;
 import com.example.schedule.comment.entity.Comment;
 import com.example.schedule.comment.repository.CommentRepository;
 import com.example.schedule.schedule.entity.Schedule;
@@ -36,5 +35,46 @@ public class CommentService {
                 savedComment.getCreatedAt(),
                 savedComment.getModifiedAt()
         );
+    }
+
+    @Transactional
+    public UpdateCommentResponse updateComment(Long scheduleId, Long commentId, UpdateCommentRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException("없는 일정입니다.")
+        );
+        Comment comment = commentRepository.findByScheduleAndId(schedule, commentId);
+        if (comment == null) {
+            throw new IllegalArgumentException("없는 댓글입니다.");
+        }
+        if (!(comment.getPassword().equals(request.getPassword()))) {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        } else {
+            comment.updateComment(
+                    request.getContents(),
+                    request.getWriter()
+            );
+            return new UpdateCommentResponse(
+                    comment.getId(),
+                    comment.getContents(),
+                    comment.getWriter(),
+                    comment.getCreatedAt(),
+                    comment.getModifiedAt()
+            );
+        }
+    }
+
+    public void deleteComment(Long scheduleId, Long commentId, DeleteCommentRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalArgumentException("없는 일정입니다.")
+        );
+        Comment comment = commentRepository.findByScheduleAndId(schedule, commentId);
+        if (comment == null) {
+            throw new IllegalArgumentException("없는 댓글입니다.");
+        }
+        if (request.getPassword().equals(comment.getPassword())) {
+            commentRepository.delete(comment);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
     }
 }

@@ -1,7 +1,10 @@
 package com.example.schedule.comment.dto;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
+@Getter
 public class GetCommentResponse {
 
     private final Long id;

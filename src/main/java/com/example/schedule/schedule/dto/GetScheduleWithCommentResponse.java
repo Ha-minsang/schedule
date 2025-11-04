@@ -14,17 +14,18 @@ public class GetScheduleWithCommentResponse {
     private final String title;
     private final String contents;
     private final String writer;
-    private final List<GetCommentResponse> commentList;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
+    private final List<GetCommentResponse> commentList;
 
-    public GetScheduleWithCommentResponse(Long id, String title, String contents, String writer, List<GetCommentResponse> commentList, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+
+    public GetScheduleWithCommentResponse(Long id, String title, String contents, String writer, LocalDateTime createdAt, LocalDateTime modifiedAt, List<GetCommentResponse> commentList) {
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.writer = writer;
-        this.commentList = commentList;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.commentList = commentList;
     }
 }

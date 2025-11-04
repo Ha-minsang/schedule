@@ -84,11 +84,11 @@ public class ScheduleService {
         List<GetCommentResponse> commentList = new ArrayList<>();
         for (Comment comment : comments) {
             commentList.add(new GetCommentResponse(
-                    schedule.getId(),
-                    schedule.getContents(),
-                    schedule.getWriter(),
-                    schedule.getCreatedAt(),
-                    schedule.getModifiedAt()
+                    comment.getId(),
+                    comment.getContents(),
+                    comment.getWriter(),
+                    comment.getCreatedAt(),
+                    comment.getModifiedAt()
             ));
         }
         return new GetScheduleWithCommentResponse(
@@ -96,9 +96,9 @@ public class ScheduleService {
                 schedule.getTitle(),
                 schedule.getContents(),
                 schedule.getWriter(),
-                commentList,
                 schedule.getCreatedAt(),
-                schedule.getModifiedAt()
+                schedule.getModifiedAt(),
+                commentList
         );
     }
 
