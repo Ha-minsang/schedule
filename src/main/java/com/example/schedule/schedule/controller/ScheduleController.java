@@ -17,31 +17,31 @@ public class ScheduleController {
 
     @PostMapping("/schedules")
     public ResponseEntity<CreateScheduleResponse> createSchedule(@RequestBody CreateScheduleRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.save(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.saveSchedule(request));
     }
 
     @GetMapping("/schedules")
     public ResponseEntity<List<GetScheduleResponse>> getSchedulesByWriter(@RequestParam(required = false) String writer) {
         if (writer == null) {
-            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findAll());
+            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findAllSchedule());
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findByWriter(writer));
+            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findScheduleByWriter(writer));
         }
     }
 
     @GetMapping("/schedules/{scheduleId}")
-    public ResponseEntity<GetScheduleResponse> getSchedule(@PathVariable Long scheduleId) {
-        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findOne(scheduleId));
+    public ResponseEntity<GetScheduleWithCommentResponse> getSchedule(@PathVariable Long scheduleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findOneSchedule(scheduleId));
     }
 
     @PutMapping("/schedules/{scheduleId}")
     public ResponseEntity<UpdateScheduleResponse> updateSchedule(@PathVariable Long scheduleId, @RequestBody UpdateScheduleRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.update(scheduleId, request));
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.updateSchedule(scheduleId, request));
     }
 
     @DeleteMapping("/schedules/{scheduleId}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId, @RequestBody DeleteScheduleRequest request) {
-        scheduleService.delete(scheduleId, request);
+        scheduleService.deleteSchedule(scheduleId, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

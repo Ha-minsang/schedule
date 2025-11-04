@@ -1,9 +1,13 @@
 package com.example.schedule.schedule.entity;
 
+import com.example.schedule.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -13,6 +17,7 @@ public class Schedule extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "schedules_id")
     private Long id;
     @Column(length = 30, nullable = false)
     private String title;
@@ -22,6 +27,8 @@ public class Schedule extends BaseEntity{
     private String writer;
     @Column(nullable = false)
     private String password;
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
+    List<Comment> comments =  new ArrayList<>();
 
     public  Schedule(String title, String contents, String writer, String password) {
         this.title = title;
