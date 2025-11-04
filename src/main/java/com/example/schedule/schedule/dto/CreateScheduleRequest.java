@@ -1,4 +1,4 @@
-package com.example.schedule.dto;
+package com.example.schedule.schedule.dto;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
 public class CreateScheduleRequest {
 
     private String title;
-    private String memo;
+    private String contents;
     private String writer;
     private String password;
 }

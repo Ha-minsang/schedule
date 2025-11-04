@@ -1,8 +1,8 @@
-package com.example.schedule.service;
+package com.example.schedule.schedule.service;
 
-import com.example.schedule.dto.*;
-import com.example.schedule.entity.Schedule;
-import com.example.schedule.repository.ScheduleRepository;
+import com.example.schedule.schedule.entity.Schedule;
+import com.example.schedule.schedule.dto.*;
+import com.example.schedule.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class ScheduleService {
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(
                 request.getTitle(),
-                request.getMemo(),
+                request.getcontents(),
                 request.getWriter(),
                 request.getPassword()
         );
@@ -28,7 +28,7 @@ public class ScheduleService {
         return new CreateScheduleResponse(
                 savedSchedule.getId(),
                 savedSchedule.getTitle(),
-                savedSchedule.getMemo(),
+                savedSchedule.getcontents(),
                 savedSchedule.getWriter(),
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getModifiedAt()
@@ -43,7 +43,7 @@ public class ScheduleService {
             GetScheduleResponse dto = new GetScheduleResponse(
                     schedule.getId(),
                     schedule.getTitle(),
-                    schedule.getMemo(),
+                    schedule.getcontents(),
                     schedule.getWriter(),
                     schedule.getCreatedAt(),
                     schedule.getModifiedAt()
@@ -61,7 +61,7 @@ public class ScheduleService {
                 GetScheduleResponse dto = new GetScheduleResponse(
                         schedule.getId(),
                         schedule.getTitle(),
-                        schedule.getMemo(),
+                        schedule.getcontents(),
                         schedule.getWriter(),
                         schedule.getCreatedAt(),
                         schedule.getModifiedAt()
@@ -79,7 +79,7 @@ public class ScheduleService {
         return new GetScheduleResponse(
                 schedule.getId(),
                 schedule.getTitle(),
-                schedule.getMemo(),
+                schedule.getcontents(),
                 schedule.getWriter(),
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
@@ -101,7 +101,7 @@ public class ScheduleService {
             return new UpdateScheduleResponse(
                     schedule.getId(),
                     schedule.getTitle(),
-                    schedule.getMemo(),
+                    schedule.getcontents(),
                     schedule.getWriter(),
                     schedule.getCreatedAt(),
                     schedule.getModifiedAt()

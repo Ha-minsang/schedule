@@ -1,4 +1,4 @@
-package com.example.schedule.entity;
+package com.example.schedule.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -17,15 +17,15 @@ public class Schedule extends BaseEntity{
     @Column(length = 30, nullable = false)
     private String title;
     @Column(length = 200, nullable = false)
-    private String memo;
+    private String contents;
     @Column(nullable = false)
     private String writer;
     @Column(nullable = false)
     private String password;
 
-    public  Schedule(String title, String memo, String writer, String password) {
+    public  Schedule(String title, String contents, String writer, String password) {
         this.title = title;
-        this.memo = memo;
+        this.contents = contents;
         this.writer = writer;
         this.password = password;
     }
