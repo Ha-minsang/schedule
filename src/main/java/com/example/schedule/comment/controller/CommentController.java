@@ -3,9 +3,6 @@ package com.example.schedule.comment.controller;
 
 import com.example.schedule.comment.dto.*;
 import com.example.schedule.comment.service.CommentService;
-import com.example.schedule.schedule.dto.DeleteScheduleRequest;
-import com.example.schedule.schedule.dto.UpdateScheduleRequest;
-import com.example.schedule.schedule.dto.UpdateScheduleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
