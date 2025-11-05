@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -22,6 +24,10 @@ public class CommentService {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalArgumentException("없는 일정입니다.")
         );
+        List<Comment> commentList = commentRepository.findAllBySchedule(schedule);
+        if (commentList.size() >= 10) {
+            throw new IllegalArgumentException("댓글은 최대 10개까지만 작성 가능합니다.");
+        }
         Comment comment = new Comment(
                 request.getContents(),
                 request.getWriter(),
