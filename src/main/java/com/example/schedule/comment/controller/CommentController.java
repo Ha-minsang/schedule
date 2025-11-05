@@ -14,7 +14,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    // CREATE 새로운 comment 생성
+    // CREATE 새 comment 저장
     @PostMapping("/schedules/{scheduleId}/comments")
     public ResponseEntity<CreateCommentResponse> createComment(@PathVariable Long scheduleId, @RequestBody CreateCommentRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.saveComment(scheduleId, request));

@@ -2,7 +2,6 @@ package com.example.schedule.comment.entity;
 
 import com.example.schedule.schedule.entity.BaseEntity;
 import com.example.schedule.schedule.entity.Schedule;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

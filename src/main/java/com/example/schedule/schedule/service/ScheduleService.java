@@ -20,6 +20,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final CommentRepository commentRepository;
 
+    // CREATE 새 schedule 저장
     @Transactional
     public CreateScheduleResponse saveSchedule(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(
@@ -39,6 +40,7 @@ public class ScheduleService {
         );
     }
 
+    // READ 작성자가 일치하는 schedule 조회 및 수정 시간 기준 내림차순 정렬
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findScheduleByWriter(String writer) {
         List<Schedule> schedules= scheduleRepository.findAllByWriterOrderByModifiedAtDesc(writer);
@@ -57,6 +59,7 @@ public class ScheduleService {
         return dtos;
     }
 
+    // READ 전체 schedule 조회 및 수정 시간 기준 내림차순 정렬
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findAllSchedule() {
             List<Schedule> schedules= scheduleRepository.findAllByOrderByModifiedAtDesc();
@@ -75,6 +78,7 @@ public class ScheduleService {
             return dtos;
     }
 
+    // READ 단일 schedule 조회
     @Transactional(readOnly = true)
     public GetScheduleWithCommentResponse findOneSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -102,6 +106,7 @@ public class ScheduleService {
         );
     }
 
+    // UPDATE schedule 수정
     @Transactional
     public UpdateScheduleResponse updateSchedule(Long scheduleId, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -125,6 +130,7 @@ public class ScheduleService {
         }
     }
 
+    // DELETE schedule 삭제
     @Transactional
     public void deleteSchedule(Long scheduleId, DeleteScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(

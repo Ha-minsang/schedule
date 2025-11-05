@@ -16,6 +16,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
 
+    // CREATE 새 comment 저장
     @Transactional
     public CreateCommentResponse saveComment(Long scheduleId, CreateCommentRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -37,6 +38,7 @@ public class CommentService {
         );
     }
 
+    // UPDATE comment 수정
     @Transactional
     public UpdateCommentResponse updateComment(Long scheduleId, Long commentId, UpdateCommentRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -63,6 +65,7 @@ public class CommentService {
         }
     }
 
+    // DELETE comment 삭제
     public void deleteComment(Long scheduleId, Long commentId, DeleteCommentRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalArgumentException("없는 일정입니다.")
