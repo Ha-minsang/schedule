@@ -2,6 +2,7 @@ package com.example.schedule.schedule.controller;
 
 import com.example.schedule.schedule.dto.*;
 import com.example.schedule.schedule.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ScheduleController {
 
     // CREATE 새 schedule 저장
     @PostMapping("/schedules")
-    public ResponseEntity<CreateScheduleResponse> createSchedule(@RequestBody CreateScheduleRequest request) {
+    public ResponseEntity<CreateScheduleResponse> createSchedule(@Valid @RequestBody CreateScheduleRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.saveSchedule(request));
     }
 
@@ -40,13 +41,13 @@ public class ScheduleController {
 
     // UPDATE schedule 수정
     @PutMapping("/schedules/{scheduleId}")
-    public ResponseEntity<UpdateScheduleResponse> updateSchedule(@PathVariable Long scheduleId, @RequestBody UpdateScheduleRequest request) {
+    public ResponseEntity<UpdateScheduleResponse> updateSchedule(@PathVariable Long scheduleId, @Valid @RequestBody UpdateScheduleRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.updateSchedule(scheduleId, request));
     }
 
     // DELETE schedule 수정
     @DeleteMapping("/schedules/{scheduleId}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId, @RequestBody DeleteScheduleRequest request) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId, @Valid @RequestBody DeleteScheduleRequest request) {
         scheduleService.deleteSchedule(scheduleId, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
