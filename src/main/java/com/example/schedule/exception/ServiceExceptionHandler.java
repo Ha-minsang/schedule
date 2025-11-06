@@ -24,4 +24,9 @@ public class ServiceExceptionHandler {
     public ResponseEntity<String> handleCommentNotFound(CommentNotFoundException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(MaxCommentLimitException.class)
+    public ResponseEntity<String> handleMaxCommentLimit(MaxCommentLimitException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

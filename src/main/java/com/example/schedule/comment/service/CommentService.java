@@ -4,6 +4,7 @@ import com.example.schedule.comment.dto.*;
 import com.example.schedule.comment.entity.Comment;
 import com.example.schedule.comment.repository.CommentRepository;
 import com.example.schedule.exception.CommentNotFoundException;
+import com.example.schedule.exception.MaxCommentLimitException;
 import com.example.schedule.exception.PasswordMismatchException;
 import com.example.schedule.exception.ScheduleNotFoundException;
 import com.example.schedule.schedule.entity.Schedule;
@@ -25,9 +26,9 @@ public class CommentService {
     @Transactional
     public CreateCommentResponse saveComment(Long scheduleId, CreateCommentRequest request) {
         Schedule schedule = checkSchedule(scheduleId);
-        List<Comment> commentList = commentRepository.findAllBySchedule(schedule);
-        if (commentList.size() >= 10) {
-            throw new IllegalArgumentException("댓글은 최대 10개까지만 작성 가능합니다.");
+        Long commentCount = commentRepository.countBySchedule(schedule);
+        if (commentCount >= 10) {
+            throw new MaxCommentLimitException();
         }
         Comment comment = new Comment(
                 request.getContents(),
