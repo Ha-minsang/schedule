@@ -3,7 +3,9 @@ package com.example.schedule.comment.service;
 import com.example.schedule.comment.dto.*;
 import com.example.schedule.comment.entity.Comment;
 import com.example.schedule.comment.repository.CommentRepository;
+import com.example.schedule.exception.CommentNotFoundException;
 import com.example.schedule.exception.PasswordMismatchException;
+import com.example.schedule.exception.ScheduleNotFoundException;
 import com.example.schedule.schedule.entity.Schedule;
 import com.example.schedule.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +76,7 @@ public class CommentService {
     // scheduleId가 일치하는 일정이 없으면 예외 처리
     private Schedule checkSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalArgumentException("없는 일정입니다.")
+                () -> new ScheduleNotFoundException()
         );
         return schedule;
     }
@@ -83,7 +85,7 @@ public class CommentService {
     private Comment checkComment(Long commentId, Schedule schedule) {
         Comment comment = commentRepository.findByScheduleAndId(schedule, commentId);
         if (comment == null) {
-            throw new IllegalArgumentException("없는 댓글입니다.");
+            throw new CommentNotFoundException();
         }
         return comment;
     }

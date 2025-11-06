@@ -4,6 +4,7 @@ import com.example.schedule.comment.dto.GetCommentResponse;
 import com.example.schedule.comment.entity.Comment;
 import com.example.schedule.comment.repository.CommentRepository;
 import com.example.schedule.exception.PasswordMismatchException;
+import com.example.schedule.exception.ScheduleNotFoundException;
 import com.example.schedule.schedule.entity.Schedule;
 import com.example.schedule.schedule.dto.*;
 import com.example.schedule.schedule.repository.ScheduleRepository;
@@ -136,7 +137,7 @@ public class ScheduleService {
     // scheduleID가 일치하는 일정이 없으면 예외 처리
     private Schedule chechSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new IllegalArgumentException("없는 일정입니다.")
+                () -> new ScheduleNotFoundException()
         );
         return schedule;
     }
